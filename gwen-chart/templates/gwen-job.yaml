@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    service: gwen
+  name: gwen
+spec:
+  template:
+    metadata:
+      labels:
+        service: gwen
+    spec:
+      containers:
+        - env:
+            - name: NO_COLOR
+              value: "1"
+            - name: BROWSERSTACK_ACCESS_KEY
+              value: {{ .Values.browserstackAccessKey }}
+            - name: BROWSERSTACK_USERNAME
+              value: {{ .Values.browserstackUsername }}
+          image: ttl.sh/gwen:1d
+          name: gwen
+          imagePullPolicy: IfNotPresent
+          resources: {}
+      restartPolicy: OnFailure
